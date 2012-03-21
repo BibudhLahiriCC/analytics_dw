@@ -1,0 +1,21 @@
+<h1>Listing dim_people</h1>
+
+<table>
+  <tr>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @dim_people.each do |dim_person| %>
+  <tr>
+    <td><%= link_to 'Show', dim_person %></td>
+    <td><%= link_to 'Edit', edit_dim_person_path(dim_person) %></td>
+    <td><%= link_to 'Destroy', dim_person, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Dim person', new_dim_person_path %>

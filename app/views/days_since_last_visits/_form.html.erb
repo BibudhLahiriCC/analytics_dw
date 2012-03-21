@@ -1,0 +1,17 @@
+<%= form_for(@days_since_last_visit) do |f| %>
+  <% if @days_since_last_visit.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@days_since_last_visit.errors.count, "error") %> prohibited this days_since_last_visit from being saved:</h2>
+
+      <ul>
+      <% @days_since_last_visit.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

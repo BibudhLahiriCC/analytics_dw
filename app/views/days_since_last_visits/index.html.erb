@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<script src="http://mbostock.github.com/d3/d3.js?2.7.1"></script>
+<script src="http://mbostock.github.com/d3/d3.layout.js?2.7.1"></script>
+<style>
+
+body {
+  font: 10px sans-serif;
+}
+
+rect {
+  fill: steelblue;
+  stroke: white;
+}
+
+line {
+  stroke: black;
+  shape-rendering: crispEdges;
+}
+
+</style>
+<body>
+<script>
+
+var data = <%= @days_since_last_visits %>;
+
+/*var n = 20, // number of trials
+    m = 10, // number of random variables
+    data = [];
+
+// Generate an Irwin-Hall distribution.
+for (var i = 0; i < n; i++) {
+  for (var s = 0, j = 0; j < m; j++) {
+    s += Math.random();
+  }
+  data.push(s);
+}
+*/
+
+//alert(data);
+var histogram = d3.layout.histogram()
+                (data);
+/*The layout object returned by d3.layout.histogram()
+  is both an object and a function. Since it is a function,
+  it can be invoked with the parameter "data". "histogram" is an
+  array with the frequencies of the different buckets.*/
+
+var width = 480,
+    height = 250;
+
+//x and y defined below are functions. Used later.
+var x = d3.scale.ordinal()
+    .domain(histogram.map(function(d) { return d.x; }))
+    .rangeRoundBands([0, width]);
+
+var y = d3.scale.linear()
+    .domain([0, d3.max(histogram.map(function(d) { return d.y; }))])
+    .range([0, height]);
+
+//Create an SVG container here
+var svg = d3.select("body").append("svg")
+    .attr("width", width)
+    .attr("height", height);
+
+/*The data array "histogram" is being bound/joined to a selection.
+  We are using the enter() operator because there are, at this
+  point, no nodes in the DOM of type "rect". d.x is lower bound of histogram
+  bin. d.y is the frequency.*/
+
+svg.selectAll("rect")
+    .data(histogram)
+  .enter().append("rect")
+    .attr("width", x.rangeBand())
+    .attr("x", function(d) { return x(d.x); })
+    .attr("y", function(d) { return height - y(d.y); })
+    .attr("height", function(d) { return y(d.y); });
+
+/*Label the histogram bins. The return type is a selection of
+  objects of class SVGTextElement. We do not need the index in the
+  key function.*/
+
+  //var labels =
+    svg.selectAll("text")
+      .data(histogram)
+      .enter().append("svg:text")
+      .attr("x", function(d) { return x(d.x); })
+      .attr("y", height + 20)
+      .attr("dx", -3)
+      .attr("dy", ".71em")
+      .attr("text-anchor", "middle")
+      .text(function(d) { return x(d.x); })
+      .attr("font-family", "sans-serif")
+      .attr("font-size", "11px")
+      .attr("fill", "black");
+
+//Draw a line at the bottom of the histogram
+svg.append("line")
+    .attr("x1", 0)
+    .attr("x2", width)
+    .attr("y1", height)
+    .attr("y2", height);
+
+</script>
+

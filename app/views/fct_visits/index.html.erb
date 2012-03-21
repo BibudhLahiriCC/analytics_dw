@@ -1,0 +1,21 @@
+<h1>Listing fct_visits</h1>
+
+<table>
+  <tr>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @fct_visits.each do |fct_visit| %>
+  <tr>
+    <td><%= link_to 'Show', fct_visit %></td>
+    <td><%= link_to 'Edit', edit_fct_visit_path(fct_visit) %></td>
+    <td><%= link_to 'Destroy', fct_visit, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Fct visit', new_fct_visit_path %>

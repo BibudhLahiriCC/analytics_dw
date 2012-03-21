@@ -1,0 +1,2 @@
+module DimPeopleHelper
+end

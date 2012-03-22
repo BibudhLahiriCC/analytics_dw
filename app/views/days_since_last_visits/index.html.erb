@@ -6,7 +6,7 @@ body {
   font: 10px sans-serif;
 }
 
-rect {
+.chart rect {
   fill: steelblue;
   stroke: white;
 }
@@ -41,7 +41,9 @@ var y = d3.scale.linear()
     .range([0, height]);
 
 //Create an SVG container here
-var svg = d3.select("#histgrm").append("svg")
+//var svg
+  var chart = d3.select("#histgrm").append("svg")
+    .attr("class", "chart")
     .attr("width", width)
     .attr("height", height);
 
@@ -50,9 +52,9 @@ var svg = d3.select("#histgrm").append("svg")
   point, no nodes in the DOM of type "rect". d.x is lower bound of histogram
   bin. d.y is the frequency.*/
 
-svg.selectAll("rect")
+  chart.selectAll("rect")
     .data(histogram)
-  .enter().append("rect")
+    .enter().append("rect")
     .attr("width", x.rangeBand())
     .attr("x", function(d) { return x(d.x); })
     .attr("y", function(d) { return height - y(d.y); })
@@ -62,8 +64,8 @@ svg.selectAll("rect")
   objects of class SVGTextElement. We do not need the index in the
   key function.*/
 
-  //var labels =
-    svg.selectAll("text")
+  /*var labels =
+    chart.selectAll("text")
       .data(histogram)
       .enter().append("svg:text")
       .attr("x", function(d) { return x(d.x); })
@@ -72,9 +74,11 @@ svg.selectAll("rect")
       .attr("dy", ".71em")
       .attr("text-anchor", "middle")
       .text(function(d) { return x(d.x); })
+      //.text(String)
       .attr("font-family", "sans-serif")
       .attr("font-size", "11px")
-      .attr("fill", "black");
+      .attr("fill", "black");*/
+
 
 //Draw a line at the bottom of the histogram
 svg.append("line")

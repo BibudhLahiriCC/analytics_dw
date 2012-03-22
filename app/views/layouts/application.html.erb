@@ -4,37 +4,31 @@
   <title>AnalyticsDw</title>
   <%= stylesheet_link_tag :all %>
   <%= stylesheet_link_tag "button", :media => 'screen' %>
-  <%= javascript_include_tag :defaults %>
   <%= javascript_include_tag "d3" %>
+  <%= javascript_include_tag "http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" %>
   <%= csrf_meta_tag %>
 </head>
 <body>
 
 <table>
+ <div id="histgrm">
  <tr>
-   <td><%= yield %></td>
+   <td id="graph"><%= yield %></td>
  </tr>
- <!--<tr>
-   <font size="2">Filter by gender:</font>
-   <td>
-     <button class="first last" onclick="transition()">
-      Male
-     </button>
-   </td>
-   <td>
-     <button class="first last" onclick="transition()">
-      Female
-     </button>
-   </td>
- </tr>-->
+ </div>
  <tr>
    <td>
-     <%= select_tag(:gender,
-            options_for_select(
-                               [['All', 'All'],
-                                ['Male', 'Male'],
-                                ['Female', 'Female']],
-                                'All')) %>
+     <font size = "2">Filter by gender:</font>
+     <%= form_tag({controller: "days_since_last_visits", action: "index"},
+                  method: :get) do %>
+       <%= select_tag :gender,
+         options_for_select(
+           [['All', 'All'],
+            ['Male', 'Male'],
+            ['Female', 'Female']],
+            'All') %>
+      <%= submit_tag "Send", :class => "form_submit" %>
+    <% end %>
    </td>
  </tr>
 </table>

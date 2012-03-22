@@ -5,7 +5,8 @@ class DaysSinceLastVisit < ActiveRecord::Base
   end
 
   class << self
-  def histogram
+  def histogram(gender)
+   puts "gender = " + gender
    days_since_last_visit_sql = <<-SQL
      select fct_visits.days_since_last_visit
      from fct_visits, dim_people

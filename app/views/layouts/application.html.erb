@@ -10,13 +10,12 @@
 <body>
 
 <table>
- <div id="histgrm">
- <tr>
-   <td id="graph"><%= yield %></td>
+  <tr>
+    <td><div id="histgrm"><%= yield %></div></td>
+    <td><div id="boxplt"></div></td>
  </tr>
- </div>
  <tr>
-   <td>
+   <td colspan = "2">
      <font size = "2">Filter by gender:</font>
      <%= form_tag({controller: "days_since_last_visits", action: "index"},
                   method: :get) do %>

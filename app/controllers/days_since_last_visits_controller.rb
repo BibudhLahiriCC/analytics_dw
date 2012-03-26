@@ -8,5 +8,6 @@ class DaysSinceLastVisitsController < ApplicationController
       format.html # index.html.erb
       format.json { render :json => @days_since_last_visits }
     end
+    #render :partial => "days_snc_lst_vst"
   end
 end

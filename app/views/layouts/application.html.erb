@@ -5,29 +5,40 @@
   <%= stylesheet_link_tag :all %>
   <%= stylesheet_link_tag "button", :media => 'screen' %>
   <%= javascript_include_tag "d3" %>
+  <%= javascript_include_tag "prototype" %>
   <%= csrf_meta_tag %>
 </head>
 <body>
 
 <table>
+  <div id="days_snc_lst_vst">
   <tr>
     <td><div id="histgrm"></div></td>
     <td><div id="boxplt"><%= yield %></div></td>
- </tr>
+  </tr>
+</div>
  <tr>
    <td colspan = "2">
      <font size = "2">Filter by gender:</font>
-     <%= form_tag({controller: "days_since_last_visits", action: "index"},
-                  method: :get) do %>
+    <!--Returns a form tag that will submit using XMLHttpRequest
+        in the background instead of the regular reloading POST arrangement.
+        The first hash that mentions the controller and the action is the
+        value for the url_for_options parameter, and the other hashes
+        are the value for the options parameter. -->
+    <%= form_tag({ controller: "days_since_last_visits",
+                           action: "index" },
+                  :method => :get,
+                  :update => "days_snc_lst_vst",
+                  :remote => true) do %>
        <%= select_tag :gender,
-         options_for_select(
-           [['All', 'All'],
-            ['Male', 'Male'],
-            ['Female', 'Female']],
-            'All') %>
-      <%= submit_tag "Send", :class => "form_submit" %>
-    <% end %>
-   </td>
+           options_for_select(
+                              [['All', 'All'],
+                               ['Male', 'Male'],
+                               ['Female', 'Female']],
+                              'All') %>
+          <%= submit_tag "Send" %>
+      <% end %>
+    </td>
  </tr>
 </table>
 </body>

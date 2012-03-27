@@ -2,7 +2,9 @@ class DaysSinceLastVisitsController < ApplicationController
   # GET /days_since_last_visits
   # GET /days_since_last_visits.json
   def index
-    @days_since_last_visits = DaysSinceLastVisit.histogram params[:gender]
+    @days_since_last_visits = DaysSinceLastVisit.histogram(
+                                params[:gender],
+                                params[:age_group])
 
     respond_to do |format|
       format.html # index.html.erb

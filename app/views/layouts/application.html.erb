@@ -7,8 +7,34 @@
   <%= javascript_include_tag "d3" %>
   <%= javascript_include_tag "prototype" %>
   <%= csrf_meta_tag %>
+
+ <script type="text/javascript">
+   function load () {
+     //Retrieving the selected gender from the helper
+     var selected_gender = '<%= gender %>';
+     var gender_drop_down = document.getElementById("gender");
+     var n_options = gender_drop_down.options.length;
+     var i;
+     for (i = 0; i < n_options; i++)
+     {
+       if (gender_drop_down.options[i].value == selected_gender)
+        gender_drop_down.selectedIndex = i;
+     }
+
+     var selected_age_group = '<%= age_group %>';
+     var age_group_drop_down = document.getElementById("age_group");
+     n_options = age_group_drop_down.options.length;
+     for (i = 0; i < n_options; i++)
+     {
+       if (age_group_drop_down.options[i].value == selected_age_group)
+        age_group_drop_down.selectedIndex = i;
+     }
+
+ }
+ </script>
+
 </head>
-<body>
+<body onload="load()">
 
 <table>
   <div id="days_snc_lst_vst">
@@ -17,29 +43,43 @@
     <td><div id="boxplt"><%= yield %></div></td>
   </tr>
 </div>
+ <%= form_tag({ controller: "days_since_last_visits",
+                           action: "index" },
+                  :method => :get,
+                  :update => "days_snc_lst_vst",
+                  :remote => true) do %>
+
  <tr>
-   <td colspan = "2">
+     <td colspan = "2">
      <font size = "2">Filter by gender:</font>
     <!--Returns a form tag that will submit using XMLHttpRequest
         in the background instead of the regular reloading POST arrangement.
         The first hash that mentions the controller and the action is the
         value for the url_for_options parameter, and the other hashes
         are the value for the options parameter. -->
-    <%= form_tag({ controller: "days_since_last_visits",
-                           action: "index" },
-                  :method => :get,
-                  :update => "days_snc_lst_vst",
-                  :remote => true) do %>
-       <%= select_tag :gender,
+          <%= select_tag :gender,
            options_for_select(
                               [['All', 'All'],
                                ['Male', 'Male'],
-                               ['Female', 'Female']],
-                              'All') %>
+                               ['Female', 'Female']]) %>
+       </td>
+    </tr>
+    <tr>
+     <td colspan = "2">
+       <font size = "2">Filter by age group:</font>
+        <%= select_tag :age_group,
+           options_for_select(
+                               [['All', 0],
+                               ['0-1', 1],
+                               ['2-5', 2],
+                               ['6-12', 3],
+                               ['13-16', 4],
+                               ['17', 5],
+                               ['18+', 6]]) %>
           <%= submit_tag "Send" %>
-      <% end %>
-    </td>
- </tr>
+     </td>
+    </tr>
+  <% end %>
 </table>
 </body>
 </html>

@@ -7,34 +7,8 @@
   <%= javascript_include_tag "d3" %>
   <%= javascript_include_tag "prototype" %>
   <%= csrf_meta_tag %>
-
- <script type="text/javascript">
-   function load () {
-     //Retrieving the selected gender from the helper
-     var selected_gender = '<%= gender %>';
-     var gender_drop_down = document.getElementById("gender");
-     var n_options = gender_drop_down.options.length;
-     var i;
-     for (i = 0; i < n_options; i++)
-     {
-       if (gender_drop_down.options[i].value == selected_gender)
-        gender_drop_down.selectedIndex = i;
-     }
-
-     var selected_age_group = '<%= age_group %>';
-     var age_group_drop_down = document.getElementById("age_group");
-     n_options = age_group_drop_down.options.length;
-     for (i = 0; i < n_options; i++)
-     {
-       if (age_group_drop_down.options[i].value == selected_age_group)
-        age_group_drop_down.selectedIndex = i;
-     }
-
- }
- </script>
-
 </head>
-<body onload="load()">
+<body>
 
 <table>
   <div id="days_snc_lst_vst">
@@ -56,12 +30,14 @@
         in the background instead of the regular reloading POST arrangement.
         The first hash that mentions the controller and the action is the
         value for the url_for_options parameter, and the other hashes
-        are the value for the options parameter. -->
+        are the value for the options parameter. The selected values are
+        retrieved from the helper functions. -->
           <%= select_tag :gender,
            options_for_select(
                               [['All', 'All'],
                                ['Male', 'Male'],
-                               ['Female', 'Female']]) %>
+                               ['Female', 'Female']],
+                              gender) %>
        </td>
     </tr>
     <tr>
@@ -75,7 +51,8 @@
                                ['6-12', 3],
                                ['13-16', 4],
                                ['17', 5],
-                               ['18+', 6]]) %>
+                               ['18+', 6]],
+                               age_group) %>
           <%= submit_tag "Send" %>
      </td>
     </tr>

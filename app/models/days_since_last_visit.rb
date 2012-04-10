@@ -35,8 +35,10 @@ class DaysSinceLastVisit < ActiveRecord::Base
    where_clause = "#{gender_clause}" << "#{age_clause}"
    days_since_last_visit_sql = <<-SQL
      select fct_visits.days_since_last_visit
-     from fct_visits, dim_people
+     from fct_visits, fct_removal_episodes, dim_people
      where fct_visits.child_id = dim_people.person_id
+     and fct_removal_episodes.child_id = dim_people.person_id
+     and fct_removal_episodes.end_date > current_date
      #{where_clause}
    SQL
 

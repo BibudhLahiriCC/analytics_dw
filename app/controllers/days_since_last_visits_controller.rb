@@ -12,4 +12,9 @@ class DaysSinceLastVisitsController < ApplicationController
     end
     #render :partial => "days_snc_lst_vst"
   end
+
+  def load_f_n_t
+    @f_n_t = DaysSinceLastVisit.f_n_t("2008-12-17", "2010-03-27", 100, 30)
+    @f_n_t.to_json
+  end
 end

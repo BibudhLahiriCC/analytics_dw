@@ -1,5 +1,14 @@
 AnalyticsDw::Application.routes.draw do
+
+  resources :metrics do
+     resources :plots
+  end
+
   resources :days_since_last_visits
+
+  map.connect "days_since_last_visits/:action",
+              :controller => 'days_since_last_visits', :action => /[a-z_]+/i
+
 
   resources :dim_people
 
